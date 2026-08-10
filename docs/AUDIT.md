@@ -1,80 +1,37 @@
 # Audit — ymmely.com (sito attuale)
 
-> **Metodo & limite trasparente.** Questo audit è stato prodotto in un ambiente il cui proxy di
-> rete **blocca l'accesso diretto a `ymmely.com`** (e alla Wayback Machine). Le informazioni qui
-> raccolte provengono quindi da **fonti pubbliche indicizzate** (motori di ricerca, directory
-> aziendali, snippet delle pagine). Per l'audit *tecnico approfondito* (stack, template, peso pagine,
-> Core Web Vitals, struttura DOM, SEO on-page) serve uno di questi accessi:
-> 1. collegare `ymmely.com` via WordPress MCP (link one-click), se è su WordPress;
-> 2. un export/screenshot delle pagine chiave;
-> 3. abilitare l'egress di rete verso il dominio.
-
----
+> Audit tecnico eseguito **con accesso amministratore reale** al sito (via WordPress/WPVibe).
 
 ## 1. Identità del brand
+- **YMMELY — Digital Reactive Communication**, agenzia di comunicazione digitale.
+- **Sede: Lugano** (unico riferimento fisico da usare — nessun altro indirizzo).
+- Due persone in evidenza: **Mattia Borri** (Creative Director) ed **Erika Varriale**.
+- Clienti citati: **Aston Martin, BMW, Salvatore Ferragamo, Studio Rocco**; case anche a Lugano (Scuola Tennis Margaroli).
 
-| Voce | Dato |
-|---|---|
-| Nome | **YMMELY** |
-| Payoff | **Digital Reactive Communication** |
-| Natura | Agenzia di comunicazione digitale / advertising |
-| Sede | Via Hausmann 11, 26900 **Lodi** (LO) — area Milano |
-| Esperienza dichiarata | ~20 anni tra advertising, grafica e digital transformation |
-| Creative Director | **Mattia Borri** |
-| Clienti citati pubblicamente | **Aston Martin, BMW Italia, Salvatore Ferragamo**, Studio Rocco Milano (immobiliare) |
+## 2. Stack tecnico (rilevato)
+- **WordPress 7.0.3**, **PHP 7.4.33** (datato — da aggiornare).
+- Tema attivo: **Munio**; costruzione pagine con **Elementor**.
+- Plugin chiave: Weglot (traduzioni), FooGallery, WPForms, Brevo/Sendinblue + SendPress (email),
+  Click-to-Chat WhatsApp, Autoptimize/Hummingbird/WP-Optimize/Smush (performance/cache), Jetpack, Akismet.
+- Analytics: **Google Tag Manager (GTM-WWPGKBM)** + Google Analytics (UA-149735886-5, Universal Analytics — obsoleto, migrare a GA4).
+- Font: Google Fonts (caricati da CDN esterna).
 
-**Posizionamento.** Ymmely si presenta come agenzia che unisce vent'anni di mestiere pubblicitario a
-servizi di trasformazione digitale. Il payoff *"Digital Reactive Communication"* è l'asset strategico
-più forte e sotto-sfruttato: promette una comunicazione che **reagisce** — al contesto, ai dati, alla
-persona. È il concetto su cui costruire tutto il nuovo sito.
+## 3. Inventario contenuti (pagine pubblicate principali)
+- `/` Home (template showcase-page.php) · `/about-us/` · `/mattia-borri/` · `/erika-varriale/`
+- `/references/` · `/news/` (Fresh News) · `/contatti/` · `/privacy/`
+- Case study (post): Studio Rocco Milano, Scuola Tennis Margaroli Lugano, Attuatori Nautilus,
+  Coworking11 Lodi, Orma Business Consulting, Zen Fashion Group, La Pergola Lodi, Art Director/Graphic Designer.
+- Molte bozze storiche di servizi ("prova"): Web Design, SEO, Advertising, Customer Care, Cloud/Hosting, ecc.
+- Pagine "brief" già sperimentate con AI: `/claudiamattia/`, `barbararizzibrief4maggio` (+ plugin `vibe-ai`).
 
-## 2. Architettura dei contenuti (pagine rilevate)
+## 4. Note critiche
+- **UA (Universal Analytics) dismesso**: migrare a GA4.
+- **PHP 7.4 a fine vita**: aggiornare per sicurezza/performance.
+- Font da CDN esterna: in ottica performance/privacy conviene self-host (WOFF2).
+- Molte bozze/pagine di test da ripulire nella migrazione.
+- Il claim "Reactive" è forte ma **non messo in scena**: è la principale opportunità del redesign.
 
-- `/` — Home ("YMMELY – Digital Reactive Communication")
-- `/about-us/` — Chi siamo
-- `/mattia-borri/` — Profilo Creative Director
-- `/area/digital-reactive-communication/` — Pagina "area" / servizio-manifesto
-- `/news/` — Blog / "Fresh News"
-- `/contatti/` — Contatti
-- `/studioroccomilano/` — Case study cliente (immobiliare)
-- Servizi menzionati negli snippet: **web design, SEO strategy, grafica & design, digital advertising**,
-  funzioni di *customer assistance / chat* per siti ed e-commerce.
-
-## 3. Lettura critica (dalle fonti disponibili)
-
-**Punti di forza**
-- Payoff distintivo e memorabile ("Reactive Communication").
-- Portfolio clienti premium (automotive di lusso + moda) che dà autorevolezza immediata.
-- Presenza di un volto/autore (Mattia Borri) → leva di fiducia e personal brand.
-
-**Rischi / aree da verificare sul sito reale**
-- **Il payoff non sembra "agito"**: il claim promette reattività, ma va verificato se il sito la
-  *dimostra* o solo la *dichiara*. È qui la più grande opportunità del redesign.
-- Struttura "servizi + news + contatti" è la struttura tipica dell'agenzia media; rischio di
-  indistinguibilità dai competitor milanesi (The Rope, Emmemedia, Digitalsfera, ecc.).
-- Da verificare tecnicamente: performance, mobile, accessibilità, SEO on-page, freschezza del blog.
-
-## 4. Competitor di riferimento (area Milano/Lodi)
-
-Digitalsfera, The Rope, Emmemedia, YourDigitalWeb ("agenzia di comunicazione AI"), The2Digitals,
-Smart Web SEO, Say Agency. **Nota strategica:** almeno un competitor si posiziona già come
-"agenzia AI" — motivo in più per rendere l'angolo AI di Ymmely *esperienziale e unico*, non solo
-una parola nel payoff.
-
-## 5. Raccomandazione sintetica
-
-Il nuovo ymmely.com deve **mettere in scena il proprio claim**: un sito che *reagisce* davanti agli
-occhi del visitatore, con un momento AI sorprendente e memorabile (vedi `CONCEPT.md`). Non un
-catalogo di servizi, ma una **dimostrazione vivente** del metodo Ymmely.
-
----
-
-### Da completare con accesso al sito (checklist audit tecnico)
-- [ ] Stack / CMS (WordPress? tema? page builder?)
-- [ ] Performance (LCP, CLS, INP) desktop + mobile
-- [ ] Peso pagina, immagini, script di terze parti
-- [ ] SEO on-page: title/meta, struttura Hn, dati strutturati, sitemap, hreflang
-- [ ] Accessibilità (contrasto, focus, alt text, semantica)
-- [ ] Inventario contenuti completo (tutte le pagine, tutti i case study, archivio news)
-- [ ] Tracciamento analytics/consent
-- [ ] Redirect map per la migrazione senza perdere SEO
+## 5. Migrazione (quando si sostituisce il sito)
+- Costruzione su **ymmely.com/new** (fatto: pagina live pubblicata).
+- Redirect 301 dalle URL attuali alle nuove (About→Studio, area→DRC, News→Journal, case→Work).
+- Preservare tracking (nuovo GA4) e traduzioni (valutare Weglot vs. soluzione statica).
