@@ -61,6 +61,7 @@
   /* logo wall */
   #ymm .clients{padding:clamp(60px,9vh,110px) 0}
   #ymm .chead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
+  #ymm .ehead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
   #ymm .logos{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
   @media(max-width:980px){#ymm .logos{grid-template-columns:repeat(4,1fr)}}
   @media(max-width:520px){#ymm .logos{grid-template-columns:repeat(3,1fr)}}
@@ -157,7 +158,7 @@
 
   /* cta + footer */
   #ymm #ycta{background:var(--ink-2)}
-  #ymm .ctabig{font-size:clamp(2.4rem,8vw,6.4rem);line-height:.96;letter-spacing:-.04em;font-weight:800;text-wrap:balance}
+  #ymm .ctabig{font-size:clamp(2.4rem,8vw,6.4rem);line-height:.96;letter-spacing:-.04em;font-weight:800;text-wrap:balance;margin:0}
   #ymm .ctabig em{font-style:normal;background:linear-gradient(92deg,var(--sig-1),var(--sig-2));-webkit-background-clip:text;background-clip:text;color:transparent}
   #ymm .foot{border-top:1px solid var(--line);padding:48px 0 64px;margin-top:0}
   #ymm .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
@@ -171,7 +172,6 @@
 </style>
 
 <div id="ymm">
-<script>try{document.getElementById("ymm").classList.add("js");}catch(e){}</script>
 
   <nav class="ynav" aria-label="Navigazione principale">
     <a class="logo" href="#ymm"><span class="dot" aria-hidden="true"></span>YMMELY</a>
@@ -191,7 +191,7 @@
     <div class="hero-in wrap">
       <div class="htag">
         <span class="pill">Agenzia di Comunicazione Digitale</span>
-        <span class="pill">Lugano · dal 1999</span>
+        <span class="pill">Lugano · Svizzera</span>
       </div>
       <h1 class="hero-h">
         <span class="lede">Agenzia di comunicazione digitale a Lugano</span>
@@ -236,7 +236,7 @@
         <a class="logo-cell" href="/references/" title="Liquigas — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/liquig.jpg" alt="Liquigas — cliente YMMELY" loading="lazy"></a>
         <a class="logo-cell" href="/references/" title="ICR — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/icr.jpg" alt="ICR — cliente YMMELY" loading="lazy"></a>
         <a class="logo-cell" href="/references/" title="Airpack — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/airpack.jpg" alt="Airpack — cliente YMMELY" loading="lazy"></a>
-        <a class="logo-cell" href="/references/" title="Austep — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/austep.jpg" alt="Austep — cliente YMMELY" loading="lazy"></a>
+        <a class="logo-cell" href="/references/" title="Aldena — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/aldena.jpg" alt="Aldena — cliente YMMELY" loading="lazy"></a>
         <a class="logo-cell" href="/references/" title="Camagni — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/camagni.jpg" alt="Camagni — cliente YMMELY" loading="lazy"></a>
         <a class="logo-cell" href="/references/" title="AM Milano — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/am-milano.jpg" alt="AM Milano — cliente YMMELY" loading="lazy"></a>
         <a class="logo-cell" href="/references/" title="Ecover — cliente YMMELY"><img src="https://ymmely.com/wp-content/uploads/2020/10/ecover.jpg" alt="Ecover — cliente YMMELY" loading="lazy"></a>
@@ -367,14 +367,17 @@
   <section class="pad" id="ycta" aria-labelledby="ycta-h">
     <div class="wrap">
       <div class="eyebrow lead reveal">Parliamone</div>
-      <div class="ctabig reveal" id="ycta-h">Hai un progetto in testa?<br>Diamogli una <em>struttura.</em></div>
+      <h2 class="ctabig reveal" id="ycta-h">Hai un progetto in testa?<br>Diamogli una <em>struttura.</em></h2>
       <p class="ssub reveal">Raccontaci dove vuoi arrivare. Ti diciamo come — senza giri di parole.</p>
       <div style="margin-top:36px;display:flex;gap:16px;flex-wrap:wrap" class="reveal">
         <a class="btn btn-p" href="mailto:info@ymmely.com">Scrivici ora <span aria-hidden="true">&rarr;</span></a>
         <a class="btn btn-g" href="/contatti/">Contatti &amp; sede</a>
       </div>
     </div>
-    <footer class="foot">
+  </section>
+  </main>
+
+  <footer class="foot">
       <div class="wrap fgrid">
         <div class="col"><b>YMMELY</b><span>Agenzia di Comunicazione Digitale</span><span>Lugano · Svizzera</span><span>Milano · Lodi · Italia</span></div>
         <div class="col"><b>Servizi</b><a href="#yservizi">Siti web &amp; app</a><a href="#yservizi">SEO</a><a href="#yservizi">Social &amp; advertising</a><a href="#yservizi">Branding</a></div>
@@ -382,9 +385,7 @@
         <div class="col"><b>Contatti</b><a href="mailto:info@ymmely.com">info@ymmely.com</a><a href="/contatti/">Contatti</a><a href="/news/">News</a></div>
       </div>
       <div class="wrap fnote">© <span id="yyr">2026</span> YMMELY — Agenzia di Comunicazione Digitale, Lugano. Tutti i diritti riservati.</div>
-    </footer>
-  </section>
-  </main>
+  </footer>
 </div>
 
 <script type="application/ld+json">
