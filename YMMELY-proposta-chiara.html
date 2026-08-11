@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YMMELY — Proposta nuovo sito</title>
+<style>
+  :root{
+    --bg:#FFFFFF;--bg-2:#F5F7FA;--bg-3:#EEF1F6;
+    --ink:#0E1116;--muted:#586172;--line:#E4E8EF;
+    --sig-1:#FF2E7E;--sig-2:#0FB5A6;--maxw:1200px;
+    --grad:linear-gradient(92deg,#FF2E7E,#0FB5A6);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Poppins","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--sig-1)}
+  .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1,h2,h3,h4{color:var(--ink);margin:0;line-height:1.08;letter-spacing:-.02em}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:100px;font-weight:600;font-size:15px;cursor:pointer;border:1.5px solid transparent;transition:transform .2s,box-shadow .2s,background .2s}
+  .btn-p{background:var(--ink);color:#fff}
+  .btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(14,17,22,.18)}
+  .btn-g{border-color:var(--line);color:var(--ink);background:#fff}
+  .btn-g:hover{border-color:var(--ink)}
+
+  /* header */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand img{height:38px;width:auto}
+  .menu{display:flex;gap:28px;align-items:center;font-size:15px;font-weight:500}
+  .menu a{color:var(--muted)}.menu a:hover{color:var(--ink)}
+  @media(max-width:860px){.menu .hidem{display:none}}
+
+  /* hero */
+  .hero{padding:70px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .hero h1{font-size:clamp(2.4rem,5.2vw,4.3rem);font-weight:800}
+  .hero p.sub{font-size:clamp(1.05rem,1.5vw,1.25rem);color:var(--muted);max-width:46ch;margin:22px 0 30px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+  .badge{border:1px solid var(--line);border-radius:100px;padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--muted);background:#fff}
+  .hero-img{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 30px 60px -20px rgba(14,17,22,.28);background:var(--bg-3)}
+  .hero-img img{width:100%;height:100%;object-fit:cover}
+  .hero-img .tagimg{position:absolute;left:16px;bottom:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);border-radius:100px;padding:8px 16px;font-size:12.5px;font-weight:600}
+
+  /* trust logos */
+  .trust{padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .trust p{margin:0 0 20px;text-align:center;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .logos{display:grid;grid-template-columns:repeat(6,1fr);gap:26px 20px;align-items:center}
+  @media(max-width:820px){.logos{grid-template-columns:repeat(3,1fr)}}
+  .logos a{display:flex;align-items:center;justify-content:center;height:54px}
+  .logos img{max-height:48px;max-width:100%;width:auto;object-fit:contain;filter:grayscale(1);opacity:.62;transition:.3s}
+  .logos a:hover img{filter:none;opacity:1}
+
+  /* sections */
+  section.blk{padding:clamp(64px,9vh,110px) 0}
+  .head{max-width:720px;margin-bottom:46px}
+  .head h2{font-size:clamp(1.9rem,4.2vw,3.1rem);font-weight:800;margin:14px 0 0}
+  .head p{color:var(--muted);font-size:1.08rem;margin:16px 0 0}
+
+  /* services */
+  .svcs{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  @media(max-width:760px){.svcs{grid-template-columns:1fr}}
+  .svc{border:1px solid var(--line);border-radius:18px;padding:32px;background:#fff;transition:transform .25s,box-shadow .25s}
+  .svc:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(14,17,22,.25)}
+  .svc .ic{width:46px;height:46px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;margin-bottom:18px}
+  .svc h3{font-size:1.45rem;font-weight:700}
+  .svc p{color:var(--muted);margin:12px 0 0;font-size:1rem}
+  .svc ul{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .svc li{font-size:12.5px;font-weight:600;color:var(--muted);background:var(--bg-2);border-radius:100px;padding:6px 12px}
+
+  /* work */
+  .work-wrap{background:var(--bg-2)}
+  .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.wgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.wgrid{grid-template-columns:1fr}}
+  .work{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+  .work:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(14,17,22,.3)}
+  .work .ph{aspect-ratio:16/11;overflow:hidden;background:var(--bg-3)}
+  .work .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .work:hover .ph img{transform:scale(1.05)}
+  .work .tx{padding:22px 22px 26px}
+  .work .k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--sig-1)}
+  .work h3{font-size:1.3rem;font-weight:700;margin:8px 0 0}
+  .work p{color:var(--muted);font-size:.96rem;margin:8px 0 0}
+
+  /* AI */
+  .ai-wrap{background:linear-gradient(180deg,#fff, #F7F3FB)}
+  .aigrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:12px}
+  @media(max-width:900px){.aigrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.aigrid{grid-template-columns:1fr}}
+  .aic{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+  .aic .d{width:38px;height:38px;border-radius:10px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:14px}
+  .aic h4{font-size:1.1rem;font-weight:700}
+  .aic p{color:var(--muted);font-size:.94rem;margin:8px 0 0}
+
+  /* team */
+  .team{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media(max-width:820px){.team{grid-template-columns:1fr}}
+  .team-img{border-radius:20px;overflow:hidden;aspect-ratio:5/4;background:var(--bg-3);box-shadow:0 30px 60px -24px rgba(14,17,22,.28)}
+  .team-img img{width:100%;height:100%;object-fit:cover}
+  .team .roles{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+  .team .role b{display:block;font-size:1.15rem}
+  .team .role span{color:var(--muted);font-size:.96rem}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+  @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat b{display:block;font-size:clamp(2rem,4vw,3rem);font-weight:800}
+  .stat span{color:var(--muted);font-size:.9rem;font-weight:600}
+
+  /* cta */
+  .cta-band{background:var(--ink);border-radius:26px;padding:clamp(40px,6vw,72px);text-align:center;color:#fff}
+  .cta-band h2{color:#fff;font-size:clamp(2rem,5vw,3.4rem);font-weight:800}
+  .cta-band p{color:rgba(255,255,255,.72);margin:18px auto 30px;max-width:52ch;font-size:1.1rem}
+  .cta-band .btn-p{background:#fff;color:var(--ink)}
+  .cta-band .btn-g{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+
+  /* footer */
+  footer.ft{padding:56px 0 44px;border-top:1px solid var(--line);margin-top:10px}
+  .ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+  @media(max-width:760px){.ft-grid{grid-template-columns:1fr 1fr}}
+  .ft-grid img{height:34px;margin-bottom:14px}
+  .ft-grid b{display:block;font-size:14px;margin-bottom:12px}
+  .ft-grid a,.ft-grid span{display:block;color:var(--muted);font-size:14px;line-height:2}
+  .ft-grid a:hover{color:var(--ink)}
+  .ft-note{margin-top:36px;color:var(--muted);font-size:12.5px}
+
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img src="https://ymmely.com/wp-content/uploads/2022/02/logo-ymmely500-STANDARD.jpg" alt="YMMELY"></a>
+    <nav class="menu">
+      <a class="hidem" href="#servizi">Servizi</a>
+      <a class="hidem" href="#lavori">Lavori</a>
+      <a class="hidem" href="#ai">AI</a>
+      <a class="hidem" href="#studio">Studio</a>
+      <a class="btn btn-p" href="#contatti" style="padding:10px 20px;font-size:14px">Contattaci</a>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badges reveal">
+        <span class="badge">Agenzia di Comunicazione Digitale</span>
+        <span class="badge">Lugano · Svizzera</span>
+      </div>
+      <h1 class="reveal">Siti, app, <span class="grad">SEO</span> e social.<br>Fatti bene.</h1>
+      <p class="sub reveal">Progettiamo, sviluppiamo e facciamo crescere la tua presenza online. Venticinque anni di mestiere creativo, una sola squadra che ti segue dall'idea al risultato — in Ticino e in Italia.</p>
+      <div class="cta reveal">
+        <a class="btn btn-p" href="#contatti">Parliamo del tuo progetto →</a>
+        <a class="btn btn-g" href="#servizi">Scopri i servizi</a>
+      </div>
+    </div>
+    <div class="hero-img reveal">
+      <img src="https://ymmely.com/wp-content/uploads/2022/10/La-pergola-Lodi-ymmely-1.jpg" alt="Progetto YMMELY — La Pergola, Lodi" loading="lazy">
+      <span class="tagimg">Progetto · La Pergola, Lodi</span>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap">
+    <p>Marchi che ci hanno dato fiducia — 25 anni di referenze</p>
+    <div class="logos reveal">
+      <a href="https://ymmely.com/references/" title="Salvatore Ferragamo"><img src="https://ymmely.com/wp-content/uploads/2020/10/ferragamo.jpg" alt="Ferragamo"></a>
+      <a href="https://ymmely.com/references/" title="Roberto Cavalli"><img src="https://ymmely.com/wp-content/uploads/2020/10/cavalli.jpg" alt="Roberto Cavalli"></a>
+      <a href="https://ymmely.com/references/" title="Aston Martin"><img src="https://ymmely.com/wp-content/uploads/2020/10/aston-martin.jpeg" alt="Aston Martin"></a>
+      <a href="https://ymmely.com/references/" title="De Nora"><img src="https://ymmely.com/wp-content/uploads/2020/10/de-nora.jpg" alt="De Nora"></a>
+      <a href="https://ymmely.com/references/" title="Unieuro"><img src="https://ymmely.com/wp-content/uploads/2020/10/unieuro.jpg" alt="Unieuro"></a>
+      <a href="https://ymmely.com/references/" title="Abbott"><img src="https://ymmely.com/wp-content/uploads/2020/10/abbot.jpg" alt="Abbott"></a>
+      <a href="https://ymmely.com/references/" title="FAAC"><img src="https://ymmely.com/wp-content/uploads/2020/10/faac.jpg" alt="FAAC"></a>
+      <a href="https://ymmely.com/references/" title="Policlinico Gemelli"><img src="https://ymmely.com/wp-content/uploads/2020/10/gemelli.jpg" alt="Policlinico Gemelli"></a>
+      <a href="https://ymmely.com/references/" title="Liquigas"><img src="https://ymmely.com/wp-content/uploads/2020/10/liquig.jpg" alt="Liquigas"></a>
+      <a href="https://ymmely.com/references/" title="ICR"><img src="https://ymmely.com/wp-content/uploads/2020/10/icr.jpg" alt="ICR"></a>
+      <a href="https://ymmely.com/references/" title="FAAC"><img src="https://ymmely.com/wp-content/uploads/2020/10/camagni.jpg" alt="Camagni"></a>
+      <a href="https://ymmely.com/references/" title="BMW Autoclub"><img src="https://ymmely.com/wp-content/uploads/2020/10/bmw-autoclub.jpg" alt="BMW Autoclub"></a>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="servizi">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">Cosa facciamo</div>
+      <h2 class="reveal">Quattro discipline,<br>un'unica <span class="grad">direzione</span>.</h2>
+      <p class="reveal">Siti e app, SEO, social e brand non sono servizi separati: sono i pezzi di un'unica struttura. Li teniamo coordinati perché è così che portano risultati nel tempo.</p>
+    </div>
+    <div class="svcs">
+      <div class="svc reveal"><div class="ic">01</div><h3>Siti Web &amp; App</h3><p>Progettiamo e sviluppiamo siti e applicazioni veloci, curati e fatti per durare. Dal design al codice.</p><ul><li>Siti aziendali</li><li>E-commerce</li><li>Web app</li><li>Mobile-first</li></ul></div>
+      <div class="svc reveal"><div class="ic">02</div><h3>SEO &amp; posizionamento</h3><p>Ti facciamo trovare da chi ti sta già cercando. Struttura, contenuti e tecnica per salire dove conta.</p><ul><li>Audit tecnico</li><li>SEO locale</li><li>Contenuti</li><li>KPI</li></ul></div>
+      <div class="svc reveal"><div class="ic">03</div><h3>Social &amp; Advertising</h3><p>Presenza costante e riconoscibile, e campagne che portano contatti veri. Contenuti per la tua voce.</p><ul><li>Piani editoriali</li><li>Creatività</li><li>Community</li><li>Ads</li></ul></div>
+      <div class="svc reveal"><div class="ic">04</div><h3>Branding &amp; Grafica</h3><p>Vent'anni di direzione creativa dietro ogni scelta: identità, logo, art direction, campagne on/offline.</p><ul><li>Identità</li><li>Logo</li><li>Art direction</li><li>Adv</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk ai-wrap" id="ai">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">AI, al suo posto giusto</div>
+      <h2 class="reveal">L'AI come strumento,<br>non come <span class="grad">scorciatoia</span>.</h2>
+      <p class="reveal">L'intelligenza artificiale ci fa andare più veloci: produciamo di più, iteriamo prima, liberiamo tempo per le decisioni che contano. Ma non firma il lavoro creativo — lo accelera. La testa resta nostra.</p>
+    </div>
+    <div class="aigrid">
+      <div class="aic reveal"><div class="d">✦</div><h4>Contenuti &amp; social</h4><p>Bozze e varianti in un attimo, per scegliere meglio e prima. Sempre rifiniti a mano.</p></div>
+      <div class="aic reveal"><div class="d">⌕</div><h4>SEO &amp; dati</h4><p>Ricerca e analisi dei contenuti che orientano le scelte editoriali.</p></div>
+      <div class="aic reveal"><div class="d">◨</div><h4>Prototipazione</h4><p>Wireframe e prototipi di siti e app in ore, non settimane.</p></div>
+      <div class="aic reveal"><div class="d">⟳</div><h4>Automazioni</h4><p>Togliamo il lavoro ripetitivo, per concentrare il tempo dove serve.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk work-wrap" id="lavori">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">Lavori</div>
+      <h2 class="reveal">Progetti veri,<br>clienti che <span class="grad">tornano</span>.</h2>
+      <p class="reveal">Ristorazione, sport, immobiliare, industria, consulenza. Cambia il settore, non il metodo: capire, costruire, far crescere.</p>
+    </div>
+    <div class="wgrid">
+      <a class="work reveal" href="https://ymmely.com/la-pergola-lodi/"><div class="ph"><img src="https://ymmely.com/wp-content/uploads/2022/10/La-pergola-Lodi-ymmely-1.jpg" alt="La Pergola Lodi" loading="lazy"></div><div class="tx"><div class="k">Ristorazione · Lodi</div><h3>La Pergola</h3><p>Sito e presenza digitale: più visibilità locale e prenotazioni.</p></div></a>
+      <a class="work reveal" href="https://ymmely.com/attuatori-nautilus-leading-the-best-rotation/"><div class="ph"><img src="https://ymmely.com/wp-content/uploads/2022/05/Attuatori-Nautilus-Leading-The-Best-Rotation-scaled.jpg" alt="Attuatori Nautilus" loading="lazy"></div><div class="tx"><div class="k">Industria B2B</div><h3>Attuatori Nautilus</h3><p>Sito B2B e SEO tecnica per un prodotto industriale di nicchia.</p></div></a>
+      <a class="work reveal" href="https://ymmely.com/studioroccomilano/"><div class="ph"><img src="https://ymmely.com/wp-content/uploads/2022/03/Studio-Rocco-Milano-Ymmely.png" alt="Studio Rocco Milano" loading="lazy"></div><div class="tx"><div class="k">Immobiliare · Milano</div><h3>Studio Rocco</h3><p>Brand e sito per l'immobiliare di pregio: lead qualificati.</p></div></a>
+      <a class="work reveal" href="https://ymmely.com/scuola-tennis-by-margaroli-lugano/"><div class="ph"><img src="https://ymmely.com/wp-content/uploads/2022/06/logo-scuola-tennis-by-margaroli-ymmely.jpg" alt="Scuola Tennis Margaroli" loading="lazy"></div><div class="tx"><div class="k">Sport · Lugano</div><h3>Scuola Tennis Margaroli</h3><p>Identità e web: iscrizioni e community.</p></div></a>
+      <a class="work reveal" href="https://ymmely.com/orma-business-consulting/"><div class="ph"><img src="https://ymmely.com/wp-content/uploads/2022/01/Orma-business-management-consulting-ymmely-1.png" alt="Orma Business Consulting" loading="lazy"></div><div class="tx"><div class="k">Consulenza</div><h3>Orma Business Consulting</h3><p>Sito e comunicazione: autorevolezza e contatti.</p></div></a>
+      <a class="work reveal" href="https://ymmely.com/coworking11lodi/"><div class="ph" style="background:linear-gradient(135deg,#FF2E7E,#0FB5A6);display:flex;align-items:center;justify-content:center"><span style="color:#fff;font-weight:800;font-size:1.6rem;letter-spacing:-.02em">Coworking11</span></div><div class="tx"><div class="k">Spazi &amp; servizi · Lodi</div><h3>Coworking11</h3><p>Brand e web per uno spazio di coworking: identità e riempimento sale.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="studio">
+  <div class="wrap">
+    <div class="team">
+      <div class="team-img reveal"><img src="https://ymmely.com/wp-content/uploads/2026/08/Claudia-e-Mattia.jpg" alt="Il team YMMELY" loading="lazy"></div>
+      <div class="reveal">
+        <div class="eyebrow">Chi siamo</div>
+        <h2 style="font-size:clamp(1.9rem,4.2vw,3rem);font-weight:800;margin:14px 0 0">Persone vere,<br>un solo interlocutore.</h2>
+        <p style="color:var(--muted);font-size:1.06rem;margin:16px 0 0">Lavori con noi, non con un reparto. È il nostro modo di costruire fiducia — e progetti che durano nel tempo. Venticinque anni di mestiere, dall'advertising al digitale.</p>
+        <div class="stats">
+          <div class="stat"><b class="grad">25</b><span>Anni di esperienza</span></div>
+          <div class="stat"><b class="grad">300+</b><span>Progetti</span></div>
+          <div class="stat"><b class="grad">4</b><span>Servizi, una regia</span></div>
+          <div class="stat"><b class="grad">CH·IT</b><span>Lugano · Milano</span></div>
+        </div>
+        <div style="margin-top:26px"><a class="btn btn-g" href="https://ymmely.com/about-us/">Scopri lo studio →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="contatti">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Hai un progetto in testa?<br>Diamogli una struttura.</h2>
+      <p>Raccontaci dove vuoi arrivare. Ti diciamo come — senza giri di parole.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-p" href="mailto:info@ymmely.com">Scrivici ora →</a>
+        <a class="btn btn-g" href="https://ymmely.com/contatti/">Contatti &amp; sede</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ft">
+  <div class="wrap ft-grid">
+    <div>
+      <img src="https://ymmely.com/wp-content/uploads/2022/02/logo-ymmely500-STANDARD.jpg" alt="YMMELY">
+      <span>Agenzia di Comunicazione Digitale</span>
+      <span>Lugano · Svizzera — Milano · Lodi</span>
+    </div>
+    <div><b>Servizi</b><a href="#servizi">Siti &amp; app</a><a href="#servizi">SEO</a><a href="#servizi">Social</a><a href="#servizi">Branding</a></div>
+    <div><b>Studio</b><a href="https://ymmely.com/about-us/">Chi siamo</a><a href="https://ymmely.com/references/">Referenze</a><a href="https://ymmely.com/news/">News</a></div>
+    <div><b>Contatti</b><a href="mailto:info@ymmely.com">info@ymmely.com</a><a href="https://ymmely.com/contatti/">Contatti</a></div>
+  </div>
+  <div class="wrap ft-note">© <span id="yr">2026</span> YMMELY — Agenzia di Comunicazione Digitale, Lugano. Tutti i diritti riservati.</div>
+</footer>
+
+<script>
+(function(){
+  try{ document.getElementById("yr").textContent = new Date().getFullYear(); }catch(e){}
+  var els=[].slice.call(document.querySelectorAll(".reveal"));
+  function showAll(){els.forEach(function(el){el.classList.add("in");});}
+  try{
+    if("IntersectionObserver" in window){
+      var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});
+      els.forEach(function(el){io.observe(el);});
+      setTimeout(showAll,3500);
+    } else showAll();
+  }catch(e){ showAll(); }
+})();
+</script>
+</body>
+</html>
