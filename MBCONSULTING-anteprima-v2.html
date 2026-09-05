@@ -270,7 +270,22 @@ body.scheda-on{overflow:hidden}
 </style>
 </head>
 <body>
-<script>try{document.documentElement.className+=' js';}catch(e){}</script>
+<script>
+/* Interruttore JS + reti di sicurezza: se il JS principale non parte o va in errore,
+   il contenuto resta comunque visibile (rimuovendo la classe .js o forzando il reveal). */
+try{
+  var _d=document.documentElement; _d.className+=' js';
+  window.addEventListener('error',function(){ try{ _d.classList.remove('js'); }catch(e){} });
+  setTimeout(function(){
+    try{
+      if(!document.querySelector('.rv.on')){
+        document.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');});
+        document.querySelectorAll('.fisa .riga').forEach(function(el){el.classList.add('vis');});
+      }
+    }catch(e){}
+  },2500);
+}catch(e){}
+</script>
 <div id="prog" aria-hidden="true"></div>
 <a class="marchio" href="#top" aria-label="MB Consulting"><img src="data:image/png;base64,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" alt="MBConsulting — creative liquid marketing"></a>
 <button class="orb" id="orb" aria-expanded="false" aria-controls="menu" onclick="toggleMenu()"><span class="lab">Menu</span><i aria-hidden="true"></i></button>
@@ -461,56 +476,272 @@ document.querySelectorAll('.voci a').forEach(a=>{a.addEventListener('click',()=>
 
 // MAPPA AREE
 const AREE=[{"n": "01", "t": "Intelligenza artificiale per l'impresa", "d": "MB Consulting porta l'AI dentro l'impresa: assistenti che rispondono ai clienti, automazioni che tolgono lavoro ripetitivo, contenuti generati con metodo e controllo. Prima si mappa il processo, poi si sceglie lo strumento.", "c": "Scopri cosa può fare l'AI per te", "v": [["Audit dei processi e mappa delle opportunità AI", "analisi"], ["Assistenti conversazionali su sito, WhatsApp e social", "chatbot · agenti"], ["Automazioni di marketing, preventivi e customer care", "workflow"], ["Produzione assistita di testi, immagini e video", "content AI"], ["WhatsApp Business avanzato: cataloghi, risposte automatiche, flussi", "whatsapp"], ["CRM e robotizzazione delle risposte, dal primo contatto al post-vendita", "crm"], ["Formazione del team e linee guida d'uso", "governance"]], "s": "AI", "a": "Si parte da un audit dei processi: dove il tempo si perde, dove i clienti aspettano una risposta, dove i dati non parlano fra loro. Poi si progetta l'assistente o l'automazione giusta, si testa con il team e si misura. L'AI entra dove serve, non ovunque.", "r": ["Mappa dei processi e piano AI con priorità", "Assistente attivo su sito, WhatsApp o social", "Automazioni CRM e linee guida d'uso per il team"]}, {"n": "02", "t": "Posizionamento e rebranding", "d": "Il lavoro che precede tutto il resto: capire chi sei, per chi, contro chi. Dal posizionamento nasce il rebranding, quando l'identità non racconta più l'impresa che è diventata.", "c": "Chiedi un'analisi di posizionamento", "v": [["Analisi di mercato, competitor e target", "ricerca"], ["Piattaforma di marca: promessa, tono, valori", "strategia"], ["Rebranding completo: identità, sistema visivo, linee guida", "design"], ["Piano di lancio interno ed esterno", "roll-out"], ["Direzione marketing in outsourcing", "continuità"]], "s": "Rebranding", "a": "Interviste, analisi del mercato e dei concorrenti, lettura di come i clienti parlano dell'impresa. Da lì una piattaforma di marca scritta, poi il sistema visivo e il piano per portarla dentro e fuori l'azienda.", "r": ["Documento di posizionamento e piattaforma di marca", "Nuova identità con manuale d'uso", "Piano di roll-out su tutti i canali"]}, {"n": "03", "t": "Startup: dal nome al lancio", "d": "Per chi parte da zero, MB Consulting segue tutto: modello, naming, identità, sito, e-commerce, social, primi contenuti. Un solo interlocutore che tiene insieme le fasi e i fornitori.", "c": "Parla della tua startup", "v": [["Validazione dell'idea e posizionamento", "strategia"], ["Naming, dominio, identità visiva", "brand"], ["Sito, e-commerce, canali social", "costruzione"], ["Piano di lancio e primi 90 giorni", "go-to-market"], ["Coordinamento di fotografi, sviluppatori, legali, stampatori", "regia"]], "s": "Startup", "a": "Per una startup MB Consulting fa da regia unica: valida l'idea, sceglie il nome, disegna l'identità, costruisce sito ed e-commerce, apre i canali e coordina fotografi, sviluppatori, legali e stampatori. Un solo interlocutore, un solo calendario.", "r": ["Naming con verifica di dominio e marchio", "Identità, sito, canali social pronti al lancio", "Piano dei primi 90 giorni"]}, {"n": "04", "t": "Identità di marca e registrazione", "d": "Un marchio non è un disegno: è una scelta strategica che va progettata, disegnata e protetta. MB Consulting segue le tre fasi, compresa la registrazione presso UIBM ed EUIPO.", "c": "Progetta il tuo marchio", "v": [["Ricerca di anteriorità e strategia del marchio", "analisi"], ["Progetto del logo, varianti, manuale d'uso", "design"], ["Applicazioni: stampa, digitale, insegne, packaging", "sistema"], ["Registrazione nazionale ed europea", "tutela"], ["Aggiornamento di marchi storici", "restyling"]], "s": "Identità di marca", "a": "Prima la ricerca di anteriorità, per non disegnare qualcosa che non si potrà usare. Poi il progetto del marchio, le varianti, le applicazioni. Infine il deposito presso UIBM ed EUIPO, seguito fino alla registrazione.", "r": ["Logo in tutti i formati con manuale d'uso", "Applicazioni su stampa, digitale, insegne e packaging", "Marchio depositato e registrato"]}, {"n": "05", "t": "Packaging", "d": "Esperienza ventennale nella progettazione di confezioni alimentari, con la conoscenza di norme, materiali e filiera di stampa; e progetti di packaging per l'alta profumeria e per il mondo automotive.", "c": "Progetta il tuo packaging", "v": [["Confezioni e etichette alimentari a norma", "food"], ["Astucci e cofanetti per profumeria e cosmetica", "luxury"], ["Materiali, finiture e prove colore con lo stampatore", "produzione"], ["Sistemi di gamma e linee prodotto", "range"], ["Rendering e prototipi prima della stampa", "3D"]], "s": "Packaging", "a": "Vent'anni di confezioni alimentari, con la conoscenza di norme, etichettatura, materiali e filiera di stampa; progetti per l'alta profumeria e per l'automotive. Ogni pack nasce con un rendering, passa dalle prove colore con lo stampatore e arriva in scaffale come previsto.", "r": ["Progetto grafico e strutturale del pack", "Rendering 3D e prototipo", "File esecutivi e assistenza in stampa"]}, {"n": "06", "t": "Siti web dinamici", "s": "Siti web", "d": "Siti che non sono vetrine ferme: contenuti gestibili, sezioni che cambiano con le stagioni e le campagne, integrazioni con newsletter, CRM e AI. Temi WordPress scritti su misura, senza page builder, veloci e indicizzabili.", "c": "Parliamo del tuo sito", "v": [["Architettura, UX e design system", "progetto"], ["Tema custom senza page builder", "sviluppo"], ["Contenuti dinamici: blog, news, cataloghi, eventi", "cms"], ["Multilingua e versioni per mercato", "lingue"], ["Integrazione con CRM, Brevo, WhatsApp, AI", "connessioni"]], "a": "Analisi dei contenuti e degli obiettivi, wireframe, design system, sviluppo del tema su misura, staging, approvazione, messa online. Il cliente riceve un sito che può aggiornare da solo, con formazione e documentazione.", "r": ["Sito WordPress con tema proprietario", "Pannello semplice per aggiornare i contenuti", "Formazione, documentazione e manutenzione"]}, {"n": "07", "t": "E-commerce customizzati", "s": "E-commerce", "d": "Negozi online costruiti attorno al prodotto e al modo di vendere del cliente: configuratori, listini per tipo di cliente, multi-valuta, pagamenti italiani e internazionali, spedizioni e fatturazione integrate. WooCommerce personalizzato in profondità, o software dedicato quando serve.", "c": "Progetta il tuo negozio", "v": [["Analisi del catalogo e del processo di vendita", "discovery"], ["Template WooCommerce su misura e checkout ottimizzato", "sviluppo"], ["Listini B2B/B2C, configuratori, varianti", "vendita"], ["Nexi, PayPal, Stripe, multi-valuta, spedizioni", "operatività"], ["Instagram Shop, Google Merchant, feed prodotti", "canali"]], "a": "Si parte dal catalogo e dal modo reale di vendere: chi compra, con che listino, con che logistica. Poi lo sviluppo WooCommerce su misura, o un software dedicato quando il negozio ha regole che un plugin non copre. Test d'acquisto reali prima di andare online.", "r": ["Negozio online con checkout ottimizzato", "Listini, configuratori e regole di vendita su misura", "Integrazioni con pagamenti, spedizioni, fatturazione e canali social"]}, {"n": "08", "t": "Software su misura", "d": "Quando un plugin non basta, MB Consulting scrive l'applicazione: gestione ordini, portali B2B, pannelli amministrativi, integrazioni fra sistemi. Il codice resta del cliente.", "c": "Descrivi il tuo processo", "v": [["Analisi del processo e prototipo", "discovery"], ["Portali ordini B2B con listini e configuratori", "React · Node"], ["Pannelli amministrativi e flussi di approvazione", "back office"], ["Integrazioni con gestionali, email, WhatsApp", "API"], ["Hosting, deploy e manutenzione", "gestione"]], "s": "Software", "a": "Dall'analisi del processo al prototipo, poi lo sviluppo in React e Node con database MySQL, il pannello amministrativo e le integrazioni. Il codice è consegnato al cliente insieme all'hosting configurato.", "r": ["Applicazione web funzionante e documentata", "Pannello amministrativo e report", "Codice sorgente e ambiente di produzione"]}, {"n": "09", "t": "SEO e visibilità", "d": "Essere trovati da chi cerca, vicino e lontano. MB Consulting cura la SEO tecnica e dei contenuti, la presenza locale su Google e la misurazione continua.", "c": "Fatti trovare", "v": [["Audit tecnico e correzione del sito", "tecnica"], ["Keyword research e piano dei contenuti", "contenuti"], ["SEO locale e Google Business Profile", "territorio"], ["Link building e digital PR", "autorevolezza"], ["Misurazione e report mensile", "dati"]], "s": "SEO", "a": "Audit tecnico, correzioni, ricerca delle parole chiave e piano dei contenuti; presenza locale su Google Business Profile e pagine territoriali; poi link building e misurazione mensile.", "r": ["Audit con priorità e correzioni applicate", "Piano contenuti e pagine ottimizzate", "Report mensile di posizionamento"]}, {"n": "10", "t": "Video e fotografia", "s": "Video e foto", "d": "Essere guardati. MB Consulting produce i materiali che oggi fanno la differenza: video e reel per social e sito, fotografia di prodotto, still life e ambientata, con regia e post-produzione interne.", "c": "Racconta con le immagini", "v": [["Concept, sceneggiatura e piano di ripresa", "regia"], ["Video istituzionali, reel e formati verticali", "video"], ["Fotografia di prodotto e still life", "foto"], ["Shooting ambientati e backstage", "set"], ["Montaggio, color e adattamenti per canale", "post"]], "a": "Concept e piano di ripresa, produzione in studio o sul posto, post-produzione e adattamento ai canali: formati verticali per i social, versioni lunghe per sito e presentazioni, fotografia di prodotto pronta per e-commerce e cataloghi.", "r": ["Video e reel montati e adattati per canale", "Fotografie di prodotto e ambientate", "Archivio ordinato e diritti d'uso chiari"]}, {"n": "11", "t": "Social media", "d": "Tutte le fasi, in ordine: si parte da dove sei, si decide dove andare, si pianifica, si produce, si pubblica, si misura. Nessun post senza una strategia dietro.", "c": "Parti dall'audit", "v": [["Audit dei canali e benchmark", "fase 1"], ["Strategia: obiettivi, target, tono, formati", "fase 2"], ["Piano editoriale mensile (PED)", "fase 3"], ["Content management: produzione e pubblicazione", "fase 4"], ["Community, advertising e report", "fase 5"]], "s": "Social", "a": "Cinque fasi, sempre nello stesso ordine: audit dei canali, strategia, piano editoriale mensile, produzione e pubblicazione, community e report. Nessun post senza un obiettivo dietro.", "r": ["Audit e strategia scritta", "Piano editoriale mensile e contenuti pubblicati", "Report con dati e azioni per il mese dopo"]}];
-(function(){
- const W=1100,Hh=820,cx=W/2,cy=Hh/2,rx=450,ry=330;
- let svg='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-hidden="true"><ellipse class="anello" cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'"/>';
- const pts=AREE.map((a,i)=>{const ang=-Math.PI/2+i*2*Math.PI/AREE.length;return [cx+rx*Math.cos(ang),cy+ry*Math.sin(ang)]});
- pts.forEach((pt,i)=>{const q=pts[(i+1)%AREE.length];svg+='<path class="filo" d="M'+cx+' '+cy+' Q'+((cx+pt[0])/2+(pt[1]-cy)*.12)+' '+((cy+pt[1])/2-(pt[0]-cx)*.12)+' '+pt[0]+' '+pt[1]+'"/>';svg+='<line class="filo" x1="'+pt[0]+'" y1="'+pt[1]+'" x2="'+q[0]+'" y2="'+q[1]+'"/>'});
- svg+='<g class="nodo centro"><circle cx="'+cx+'" cy="'+cy+'" r="92"/><text class="n" x="'+cx+'" y="'+(cy-14)+'" text-anchor="middle">Regia</text><text class="t" x="'+cx+'" y="'+(cy+10)+'" text-anchor="middle">Direzione strategica</text><text class="t" x="'+cx+'" y="'+(cy+32)+'" text-anchor="middle">e creativa</text></g>';
- pts.forEach((pt,i)=>{const a=AREE[i];svg+='<g class="nodo" tabindex="0" role="button" data-i="'+i+'" aria-label="'+a.t+'"><circle cx="'+pt[0]+'" cy="'+pt[1]+'" r="62"/><text class="n" x="'+pt[0]+'" y="'+(pt[1]-8)+'" text-anchor="middle">'+a.n+'</text><text class="t" x="'+pt[0]+'" y="'+(pt[1]+14)+'" text-anchor="middle">'+a.s+'</text></g>'});
- svg+='</svg>';
- let grid='<div class="fisa"><div class="regia"><span class="n">Regia</span><span class="t">Direzione strategica e creativa</span></div>';
- AREE.forEach((a,i)=>{grid+='<div class="riga" data-r="'+i+'"><span class="liq"></span><button class="testa" type="button" aria-expanded="false"><span class="n">'+a.n+'</span><span class="t">'+a.s+'</span><span class="pi" aria-hidden="true"></span></button><div class="corpo"><div><p>'+a.d+'</p><ul>'+a.v.slice(0,3).map(x=>'<li>'+x[0]+'</li>').join('')+'</ul><button class="btn btn-vivo" type="button" data-i="'+i+'">Approfondisci</button></div></div></div>'});grid+='</div>';
- const c=document.getElementById('cielo');c.innerHTML=svg+grid;
- c.querySelectorAll('.fisa .testa').forEach(b=>b.addEventListener('click',e=>{const r=b.parentElement;const rect=r.getBoundingClientRect();r.style.setProperty('--x',(e.clientX-rect.left||rect.width/2)+'px');r.style.setProperty('--y',(e.clientY-rect.top||rect.height/2)+'px');const ap=r.classList.contains('aperta');c.querySelectorAll('.fisa .riga.aperta').forEach(o=>{o.classList.remove('aperta');o.querySelector('.testa').setAttribute('aria-expanded','false')});if(!ap){r.classList.add('aperta');b.setAttribute('aria-expanded','true');setTimeout(()=>{const t=r.getBoundingClientRect().top;if(t<80)window.scrollBy({top:t-80,behavior:'smooth'})},350)}}));
- const ior=new IntersectionObserver(es=>es.forEach((e,k)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),(+e.target.dataset.r%6)*70);ior.unobserve(e.target)}}),{threshold:.2});
- c.querySelectorAll('.fisa .riga').forEach(r=>ior.observe(r));
- c.querySelectorAll('[data-i]').forEach(el=>{el.addEventListener('click',()=>apriScheda(+el.dataset.i));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();apriScheda(+el.dataset.i)}})});
-})();
-let cur=0,lastFocus=null;
-function apriScheda(i){cur=i;const a=AREE[i];lastFocus=document.activeElement;
- document.getElementById('scheda-n').textContent='Area '+a.n+' di '+String(AREE.length).padStart(2,'0');document.getElementById('scheda-t').textContent=a.t;document.getElementById('scheda-d').textContent=a.d;document.getElementById('scheda-c').textContent=a.c;
- document.getElementById('scheda-v').innerHTML=a.v.map(x=>'<li>'+x[0]+'<span>'+x[1]+'</span></li>').join('');document.getElementById('scheda-a').textContent=a.a;document.getElementById('scheda-r').innerHTML=a.r.map(x=>'<li>'+x+'</li>').join('');document.getElementById('scheda-p').textContent=a.n+' / '+String(AREE.length).padStart(2,'0');
- const sc=document.getElementById('scheda');sc.hidden=false;sc.scrollTop=0;requestAnimationFrame(()=>sc.classList.add('on'));document.body.classList.add('scheda-on');history.replaceState(null,'','#area-'+a.n);setTimeout(()=>sc.querySelector('.chiudi').focus(),400)}
-function chiudiScheda(){const sc=document.getElementById('scheda');sc.classList.remove('on');document.body.classList.remove('scheda-on');setTimeout(()=>{sc.hidden=true},700);if(lastFocus)lastFocus.focus()}
-function vaiScheda(d){apriScheda((cur+d+AREE.length)%AREE.length)}
-document.addEventListener('keydown',e=>{if(document.body.classList.contains('scheda-on')){if(e.key==='Escape')chiudiScheda();if(e.key==='ArrowRight')vaiScheda(1);if(e.key==='ArrowLeft')vaiScheda(-1)}});
-if(location.hash.startsWith('#area-')){const n=parseInt(location.hash.slice(6))-1;if(n>=0&&n<AREE.length)setTimeout(()=>apriScheda(n),300)}
 
-// barra avanzamento
-addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
-// reveal
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-// UI fissa scura sulle sezioni chiare
-const scure=[...document.querySelectorAll('.hero,.lavori,.contatto,.colonne > div:first-child')].slice(0,3);
-const io2=new IntersectionObserver(es=>{const dark=es.some(e=>e.isIntersecting&&e.intersectionRatio>0);},{});
-function chiaro(){const y=innerHeight*.06;const el=document.elementFromPoint(24,y+24);const sez=el&&el.closest('section');document.body.classList.toggle('chiaro',!(sez&&(sez.classList.contains('hero')||sez.classList.contains('lavori')||sez.classList.contains('contatto'))))}
-addEventListener('scroll',chiaro,{passive:true});chiaro();
-// pista orizzontale guidata dallo scroll (desktop)
-const lav=document.getElementById('lavori'),pista=document.getElementById('pista');
-function sizeLav(){if(innerWidth<900){lav.style.height='';pista.style.transform='';return}const extra=pista.scrollWidth-innerWidth;lav.style.height=(innerHeight+extra)+'px'}
-function moveLav(){if(innerWidth<900)return;const r=lav.getBoundingClientRect();const extra=pista.scrollWidth-innerWidth;const t=Math.min(Math.max(-r.top/(extra||1),0),1);pista.style.transform='translateX('+(-t*extra)+'px)'}
-addEventListener('resize',sizeLav);addEventListener('scroll',moveLav,{passive:true});sizeLav();moveLav();
-// fluido: onde di luce che seguono il puntatore
-const c=document.getElementById('fluido'),x=c.getContext('2d');let W,H,px=.7,py=.4,tx=.7,ty=.4,t=0;
-function rs(){W=c.width=innerWidth*devicePixelRatio/1.5|0;H=c.height=innerHeight*devicePixelRatio/1.5|0}rs();addEventListener('resize',rs);
-addEventListener('pointermove',e=>{tx=e.clientX/innerWidth;ty=e.clientY/innerHeight},{passive:true});
-function frame(){t+=rm?0:.006;px+=(tx-px)*.04;py+=(ty-py)*.04;x.clearRect(0,0,W,H);
- for(let i=0;i<3;i++){const g=x.createRadialGradient(W*(px+Math.sin(t*1.3+i)*.12),H*(py+Math.cos(t+i*2)*.12),0,W*px,H*py,W*(.35+i*.18));g.addColorStop(0,'rgba(46,163,230,'+(0.55-i*.15)+')');g.addColorStop(1,'rgba(6,24,44,0)');x.fillStyle=g;x.fillRect(0,0,W,H)}
- x.strokeStyle='rgba(191,217,236,.28)';x.lineWidth=1;
- for(let k=0;k<7;k++){x.beginPath();for(let i=0;i<=60;i++){const u=i/60;const y=H*(.55+k*.05)+Math.sin(u*6+t*2+k)*H*.03*(1+k*.2)+Math.sin(u*13-t*3)*H*.01;i?x.lineTo(u*W,y):x.moveTo(0,y)}x.stroke()}
- if(!rm)requestAnimationFrame(frame)}frame();
+/* ======================================================================
+   MB Consulting — interazioni (vanilla, nessuna libreria)
+   Regola d'oro: il contenuto NON deve mai sparire se il JS fallisce.
+   - lo stato "nascosto" del reveal vive solo sotto html.js (impostato in <head>/<body>)
+   - l'osservatore di reveal è registrato PRIMA di ogni codice che può lanciare
+   - ogni sottosistema (canvas, mappa, scheda, pista) è isolato in try/catch
+   - in caso di errore si mostra tutto (revealAll) e resta il fallback statico
+   ====================================================================== */
+var supIO = ('IntersectionObserver' in window);
+
+/* ---- REVEAL: registrato per primo, degrada a "tutto visibile" ---- */
+function revealAll(){
+  try{ document.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');}); }catch(e){}
+  try{ document.querySelectorAll('.fisa .riga').forEach(function(el){el.classList.add('vis');}); }catch(e){}
+}
+var revealIO=null;
+try{
+  if(supIO){
+    revealIO=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); revealIO.unobserve(e.target); } });
+    },{threshold:.14,rootMargin:'0px 0px -6% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){ revealIO.observe(el); });
+  } else { revealAll(); }
+}catch(e){ revealAll(); }
+
+/* ---- SCHEDA (bottom sheet): funzioni globali, richiamate da onclick inline ---- */
+var cur=0, lastFocus=null;
+function apriScheda(i){
+  try{
+    if(!AREE[i]) return;
+    cur=i; var a=AREE[i]; lastFocus=document.activeElement;
+    var $=function(id){return document.getElementById(id);};
+    $('scheda-n').textContent='Area '+a.n+' di '+String(AREE.length).padStart(2,'0');
+    $('scheda-t').textContent=a.t; $('scheda-d').textContent=a.d; $('scheda-c').textContent=a.c;
+    $('scheda-v').innerHTML=a.v.map(function(x){return '<li>'+x[0]+'<span>'+x[1]+'</span></li>';}).join('');
+    $('scheda-a').textContent=a.a;
+    $('scheda-r').innerHTML=a.r.map(function(x){return '<li>'+x+'</li>';}).join('');
+    $('scheda-p').textContent=a.n+' / '+String(AREE.length).padStart(2,'0');
+    var sc=$('scheda'); sc.hidden=false; sc.scrollTop=0;
+    requestAnimationFrame(function(){ sc.classList.add('on'); });
+    document.body.classList.add('scheda-on');
+    try{ history.replaceState(null,'','#area-'+a.n); }catch(e){}
+    setTimeout(function(){ var b=sc.querySelector('.chiudi'); if(b)b.focus(); },400);
+  }catch(e){}
+}
+function chiudiScheda(){
+  try{
+    var sc=document.getElementById('scheda'); if(!sc) return;
+    sc.classList.remove('on'); document.body.classList.remove('scheda-on');
+    setTimeout(function(){ sc.hidden=true; },700);
+    if(lastFocus&&lastFocus.focus) lastFocus.focus();
+  }catch(e){}
+}
+function vaiScheda(d){ try{ apriScheda((cur+d+AREE.length)%AREE.length); }catch(e){} }
+document.addEventListener('keydown',function(e){
+  if(document.body.classList.contains('scheda-on')){
+    if(e.key==='Escape') chiudiScheda();
+    else if(e.key==='ArrowRight') vaiScheda(1);
+    else if(e.key==='ArrowLeft') vaiScheda(-1);
+  }
+});
+
+/* ---- MAPPA: costellazione SVG (desktop) + fisarmonica liquida (mobile) ---- */
+function buildMappa(){
+  var c=document.getElementById('cielo'); if(!c) return;
+  var W=1100,Hh=820,cx=W/2,cy=Hh/2,rx=450,ry=330,N=AREE.length;
+  var pts=AREE.map(function(a,i){ var ang=-Math.PI/2+i*2*Math.PI/N; return [cx+rx*Math.cos(ang), cy+ry*Math.sin(ang)]; });
+  var svg='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Mappa delle aree di intervento con la regia al centro">';
+  svg+='<ellipse class="anello" cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'"/>';
+  // fili: raggio verso il centro (spoke) + arco verso il nodo successivo (ring)
+  pts.forEach(function(pt,i){
+    var q=pts[(i+1)%N];
+    var mx=(cx+pt[0])/2+(pt[1]-cy)*.12, my=(cy+pt[1])/2-(pt[0]-cx)*.12;
+    svg+='<path class="filo spoke" data-s="'+i+'" style="animation-delay:'+(i*0.05).toFixed(2)+'s" d="M'+cx+' '+cy+' Q'+mx+' '+my+' '+pt[0]+' '+pt[1]+'"/>';
+    svg+='<line class="filo ring" data-r="'+i+'" style="animation-delay:'+(0.28+i*0.05).toFixed(2)+'s" x1="'+pt[0]+'" y1="'+pt[1]+'" x2="'+q[0]+'" y2="'+q[1]+'"/>';
+  });
+  // anello pulsante attorno alla regia
+  svg+='<circle class="pulse" cx="'+cx+'" cy="'+cy+'" r="92"/>';
+  // nodo centrale (regia)
+  svg+='<g class="nodo centro"><circle cx="'+cx+'" cy="'+cy+'" r="92"/><text class="n" x="'+cx+'" y="'+(cy-14)+'" text-anchor="middle">Regia</text><text class="t" x="'+cx+'" y="'+(cy+10)+'" text-anchor="middle">Direzione strategica</text><text class="t" x="'+cx+'" y="'+(cy+32)+'" text-anchor="middle">e creativa</text></g>';
+  // nodi delle 11 aree
+  pts.forEach(function(pt,i){
+    var a=AREE[i];
+    svg+='<g class="nodo" tabindex="0" role="button" data-i="'+i+'" data-node="'+i+'" style="animation-delay:'+(0.5+i*0.05).toFixed(2)+'s" aria-label="'+a.t+'"><circle cx="'+pt[0]+'" cy="'+pt[1]+'" r="62"/><text class="n" x="'+pt[0]+'" y="'+(pt[1]-8)+'" text-anchor="middle">'+a.n+'</text><text class="t" x="'+pt[0]+'" y="'+(pt[1]+14)+'" text-anchor="middle">'+a.s+'</text></g>';
+  });
+  svg+='</svg>';
+  // fisarmonica liquida (mobile/tablet)
+  var grid='<div class="fisa"><div class="regia"><span class="n">Regia</span><span class="t">Direzione strategica e creativa</span></div>';
+  AREE.forEach(function(a,i){
+    grid+='<div class="riga" data-r="'+i+'"><span class="liq"></span><button class="testa" type="button" aria-expanded="false"><span class="n">'+a.n+'</span><span class="t">'+a.s+'</span><span class="pi" aria-hidden="true"></span></button><div class="corpo"><div><p>'+a.d+'</p><ul>'+a.v.slice(0,3).map(function(x){return '<li>'+x[0]+'</li>';}).join('')+'</ul><button class="btn btn-vivo" type="button" data-i="'+i+'">Approfondisci</button></div></div></div>';
+  });
+  grid+='</div>';
+  // inserimento: sostituisce il fallback statico solo ora che tutto è pronto
+  c.innerHTML=svg+grid;
+
+  // lunghezze dei fili per il disegno progressivo (stroke-dashoffset)
+  try{
+    c.querySelectorAll('.filo').forEach(function(f){
+      var L=(f.getTotalLength&&f.getTotalLength())||1200;
+      f.style.setProperty('--len',(Math.ceil(L)+2));
+    });
+  }catch(e){}
+
+  // trigger disegno quando la costellazione entra in vista
+  function accendi(){ c.classList.add('draw'); }
+  try{
+    if(supIO){
+      var drawIO=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ accendi(); drawIO.disconnect(); } }); },{threshold:.2});
+      drawIO.observe(c);
+    } else { accendi(); }
+  }catch(e){ accendi(); }
+
+  // hover/focus di un nodo: accende i fili collegati e attenua gli altri
+  function evidenzia(i,on){
+    try{
+      var spoke=c.querySelector('.spoke[data-s="'+i+'"]');
+      var r1=c.querySelector('.ring[data-r="'+i+'"]');
+      var r0=c.querySelector('.ring[data-r="'+((i-1+N)%N)+'"]');
+      [spoke,r1,r0].forEach(function(el){ if(el)el.classList.toggle('hot',on); });
+      c.querySelectorAll('.nodo[data-node]').forEach(function(g){ if(+g.dataset.node!==i) g.classList.toggle('dim',on); });
+    }catch(e){}
+  }
+  c.querySelectorAll('.nodo[data-node]').forEach(function(g){
+    var i=+g.dataset.node;
+    g.addEventListener('mouseenter',function(){evidenzia(i,true);});
+    g.addEventListener('mouseleave',function(){evidenzia(i,false);});
+    g.addEventListener('focus',function(){evidenzia(i,true);});
+    g.addEventListener('blur',function(){evidenzia(i,false);});
+  });
+
+  // apertura scheda da nodo (mouse + tastiera)
+  c.querySelectorAll('[data-i]').forEach(function(el){
+    el.addEventListener('click',function(){ apriScheda(+el.dataset.i); });
+    el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); apriScheda(+el.dataset.i); } });
+  });
+
+  // fisarmonica: onda liquida dal punto toccato, una sola riga aperta
+  c.querySelectorAll('.fisa .testa').forEach(function(b){
+    b.addEventListener('click',function(e){
+      var r=b.parentElement, rect=r.getBoundingClientRect();
+      r.style.setProperty('--x',((e.clientX-rect.left)||rect.width/2)+'px');
+      r.style.setProperty('--y',((e.clientY-rect.top)||rect.height/2)+'px');
+      var ap=r.classList.contains('aperta');
+      c.querySelectorAll('.fisa .riga.aperta').forEach(function(o){ o.classList.remove('aperta'); o.querySelector('.testa').setAttribute('aria-expanded','false'); });
+      if(!ap){
+        r.classList.add('aperta'); b.setAttribute('aria-expanded','true');
+        setTimeout(function(){ var t=r.getBoundingClientRect().top; if(t<80) window.scrollBy({top:t-80,behavior:'smooth'}); },350);
+      }
+    });
+  });
+
+  // cascata di ingresso delle righe della fisarmonica
+  try{
+    if(supIO){
+      var fisaIO=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('vis'); },(+e.target.dataset.r%6)*70); fisaIO.unobserve(e.target); } }); },{threshold:.2});
+      c.querySelectorAll('.fisa .riga').forEach(function(r){ fisaIO.observe(r); });
+    } else { c.querySelectorAll('.fisa .riga').forEach(function(r){ r.classList.add('vis'); }); }
+  }catch(e){ c.querySelectorAll('.fisa .riga').forEach(function(r){ r.classList.add('vis'); }); }
+}
+try{ buildMappa(); }
+catch(e){ if(window.console&&console.warn) console.warn('mappa: fallback statico attivo',e); }
+
+/* deep-link #area-01…11 (dopo che la mappa/scheda sono pronte) */
+try{
+  if(location.hash.indexOf('#area-')===0){
+    var n=parseInt(location.hash.slice(6),10)-1;
+    if(n>=0&&n<AREE.length) setTimeout(function(){ apriScheda(n); },300);
+  }
+}catch(e){}
+
+/* ---- BARRA DI AVANZAMENTO ---- */
+try{
+  addEventListener('scroll',function(){
+    var h=document.documentElement, b=document.getElementById('prog');
+    if(b) b.style.width=(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)*100)+'%';
+  },{passive:true});
+}catch(e){}
+
+/* ---- UI FISSA scura sulle sezioni chiare (body.chiaro) ---- */
+try{
+  function chiaro(){
+    try{
+      var y=innerHeight*.06, el=document.elementFromPoint(24,y+24);
+      var sez=el&&el.closest&&el.closest('section');
+      var scuroBg=sez&&(sez.classList.contains('hero')||sez.classList.contains('lavori')||sez.classList.contains('contatto'));
+      document.body.classList.toggle('chiaro',!scuroBg);
+    }catch(e){}
+  }
+  addEventListener('scroll',chiaro,{passive:true});
+  addEventListener('resize',chiaro,{passive:true});
+  chiaro();
+}catch(e){}
+
+/* ---- LAVORI: pista orizzontale guidata dallo scroll (desktop) ---- */
+try{
+  var lav=document.getElementById('lavori'), pista=document.getElementById('pista');
+  if(lav&&pista){
+    var sizeLav=function(){ if(innerWidth<900){ lav.style.height=''; pista.style.transform=''; return; } var extra=pista.scrollWidth-innerWidth; lav.style.height=(innerHeight+Math.max(extra,0))+'px'; };
+    var moveLav=function(){ if(innerWidth<900) return; var r=lav.getBoundingClientRect(); var extra=pista.scrollWidth-innerWidth; if(extra<=0){ pista.style.transform=''; return; } var t=Math.min(Math.max(-r.top/extra,0),1); pista.style.transform='translateX('+(-t*extra)+'px)'; };
+    addEventListener('resize',sizeLav); addEventListener('scroll',moveLav,{passive:true});
+    sizeLav(); moveLav();
+  }
+}catch(e){}
+
+/* ---- HERO: canvas fluido in blu mare, reattivo a puntatore/tocco ----
+   DPR limitato a 1.5 · pausa fuori schermo e con document.hidden ·
+   reduced-motion = un solo fotogramma statico (più fallback CSS a gradiente) */
+try{
+  (function(){
+    var c=document.getElementById('fluido'); if(!c) return;
+    var x=c.getContext&&c.getContext('2d'); if(!x) return;
+    var dpr=Math.min(window.devicePixelRatio||1,1.5);
+    var W=0,H=0, px=.7,py=.42, tx=.7,ty=.42, t=0, running=false, rafId=0, heroVis=true;
+    var ripples=[];
+    function rs(){ W=c.width=Math.max(1,(innerWidth*dpr)|0); H=c.height=Math.max(1,(innerHeight*dpr)|0); }
+    rs(); addEventListener('resize',rs);
+    addEventListener('pointermove',function(e){ tx=e.clientX/innerWidth; ty=e.clientY/innerHeight; },{passive:true});
+    addEventListener('pointerdown',function(e){ tx=e.clientX/innerWidth; ty=e.clientY/innerHeight; if(!rm){ ripples.push({x:tx,y:ty,r:0,a:.5}); if(ripples.length>6) ripples.shift(); if(!running) start(); } },{passive:true});
+    function draw(){
+      px+=(tx-px)*.045; py+=(ty-py)*.045;
+      x.clearRect(0,0,W,H);
+      // metaballs di luce blu mare che seguono il puntatore
+      for(var i=0;i<3;i++){
+        var ox=W*(px+Math.sin(t*1.15+i)*.11), oy=H*(py+Math.cos(t*0.9+i*2)*.11);
+        var g=x.createRadialGradient(ox,oy,0,W*px,H*py,W*(.34+i*.19));
+        g.addColorStop(0,'rgba(46,163,230,'+(0.52-i*.14)+')');
+        g.addColorStop(.55,'rgba(14,107,168,'+(0.16-i*.04)+')');
+        g.addColorStop(1,'rgba(6,24,44,0)');
+        x.fillStyle=g; x.fillRect(0,0,W,H);
+      }
+      // onde di schiuma sottili
+      x.strokeStyle='rgba(191,217,236,.26)'; x.lineWidth=Math.max(1,dpr);
+      for(var k=0;k<7;k++){
+        x.beginPath();
+        for(var j=0;j<=64;j++){
+          var u=j/64;
+          var yy=H*(.55+k*.05)+Math.sin(u*6+t*2+k)*H*.03*(1+k*.2)+Math.sin(u*13-t*3)*H*.01;
+          j?x.lineTo(u*W,yy):x.moveTo(0,yy);
+        }
+        x.stroke();
+      }
+      // increspature dal tocco
+      for(var m=ripples.length-1;m>=0;m--){
+        var rp=ripples[m]; rp.r+=.018; rp.a*=.955;
+        if(rp.a<.02){ ripples.splice(m,1); continue; }
+        x.beginPath();
+        x.arc(rp.x*W,rp.y*H,rp.r*W,0,Math.PI*2);
+        x.strokeStyle='rgba(46,163,230,'+rp.a+')'; x.lineWidth=Math.max(1.2,dpr*1.2); x.stroke();
+      }
+    }
+    function loop(){ t+=.006; draw(); if(!rm&&running) rafId=requestAnimationFrame(loop); }
+    function start(){ if(rm){ draw(); return; } if(!running){ running=true; rafId=requestAnimationFrame(loop); } }
+    function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+    function sync(){ if(!rm && heroVis && !document.hidden) start(); else stop(); }
+    document.addEventListener('visibilitychange',sync);
+    try{
+      if(supIO){
+        var heroIO=new IntersectionObserver(function(es){ es.forEach(function(e){ heroVis=e.isIntersecting; }); sync(); },{threshold:0});
+        var hero=document.querySelector('.hero'); if(hero) heroIO.observe(hero);
+      }
+    }catch(e){}
+    if(rm){ draw(); } else { sync(); }
+  })();
+}catch(e){}
+
 </script>
 </body>
 </html>
