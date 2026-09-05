@@ -62,6 +62,7 @@ body.menu-on .voci a{opacity:1;transform:none}
 .hero{height:100svh;overflow:hidden;background:var(--notte);color:#fff;display:grid;align-items:end}
 .hero img.foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 40%;opacity:.85}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;opacity:.9}
+@media (prefers-reduced-motion:reduce){.hero canvas{background:radial-gradient(120% 90% at 70% 45%,rgba(46,163,230,.5),rgba(14,107,168,.25) 40%,rgba(6,24,44,0) 70%)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,24,44,.15) 0%,rgba(6,24,44,0) 35%,rgba(6,24,44,.85) 100%)}
 .hero .testo{position:relative;z-index:2;padding:0 var(--gut) clamp(40px,7vh,80px)}
 .hero .tag{font-family:var(--label);font-weight:200;font-size:11px;letter-spacing:.155em;text-transform:uppercase;color:#BFD9EC;margin-bottom:22px}
@@ -309,7 +310,20 @@ body.scheda-on{overflow:hidden}
     <h2 class="rv">Undici aree, una regia</h2>
     <p class="sotto rv">Le competenze di MB Consulting sono integrate: al centro la direzione strategica e creativa, intorno le aree di intervento. Tocca un'area per approfondire.</p>
   </div>
-  <div class="cielo rv" id="cielo" aria-label="Mappa delle aree di intervento"></div>
+  <div class="cielo rv" id="cielo" aria-label="Mappa delle aree di intervento"><div class="fallback" id="cielo-fallback">
+    <div class="regia"><span class="n">Regia</span><span class="t">Direzione strategica e creativa</span></div>
+    <a href="#area-01"><span class="n">01</span><span class="t">Intelligenza artificiale per l'impresa</span></a>
+    <a href="#area-02"><span class="n">02</span><span class="t">Posizionamento e rebranding</span></a>
+    <a href="#area-03"><span class="n">03</span><span class="t">Startup: dal nome al lancio</span></a>
+    <a href="#area-04"><span class="n">04</span><span class="t">Identità di marca e registrazione</span></a>
+    <a href="#area-05"><span class="n">05</span><span class="t">Packaging</span></a>
+    <a href="#area-06"><span class="n">06</span><span class="t">Siti web dinamici</span></a>
+    <a href="#area-07"><span class="n">07</span><span class="t">E-commerce customizzati</span></a>
+    <a href="#area-08"><span class="n">08</span><span class="t">Software su misura</span></a>
+    <a href="#area-09"><span class="n">09</span><span class="t">SEO e visibilità</span></a>
+    <a href="#area-10"><span class="n">10</span><span class="t">Video e fotografia</span></a>
+    <a href="#area-11"><span class="n">11</span><span class="t">Social media</span></a>
+  </div></div>
   <p class="wrap legenda rv">Ogni filo è un passaggio reale: la strategia decide il marchio, il marchio guida il packaging e il sito, il sito alimenta SEO e social, l'AI e il CRM tengono viva la relazione.</p>
 </section>
 
